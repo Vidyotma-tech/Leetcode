@@ -1,0 +1,40 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int inx=-1;
+        int len=nums.length;
+        int temp=0;
+        for(int i=len-2;i>=0;i--){
+            if(nums[i]<nums[i+1]){
+                inx=i;
+                break;
+            }
+        }
+
+        //given permutation is largest 
+        if(inx==-1){
+            for(int i=0;i<len/2;i++){
+                temp = nums[i];
+                nums[i] = nums[len-i-1];
+                nums[len-i-1] = temp;
+            }
+        }
+        else{
+            //swap nums[inx] with first largest than nums[inx] from right
+            for(int i=len-1;i>inx;i--){
+                if(nums[i]>nums[inx]){
+                    temp = nums[i];
+                    nums[i] = nums[inx];
+                    nums[inx] = temp;
+                    break;
+                }
+            }
+
+            //reverse the array from nums[inx] in right
+            for(int i=inx+1;i<=(inx+len)/2;i++){
+                temp = nums[i];
+                nums[i] = nums[len-i+inx];
+                nums[len-i+inx] = temp;
+            }
+        }
+    }
+}
