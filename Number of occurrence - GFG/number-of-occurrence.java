@@ -37,27 +37,24 @@ public class Main {
 
 class Solution {
     int count(int[] arr, int n, int x) {
-        int count=0,low=0,high=n-1,mid=-1;
-        while(low<=high){
-            mid = (low+high)/2;
-            if(arr[mid]==x){
-                count++;
-                break;
+        int linx=binarySearch(arr,x,false);
+        if(linx<0) return 0;
+        int rinx=binarySearch(arr,x,true);
+        return rinx-linx+1;
+    }
+    
+    int binarySearch(int arr[],int target,boolean leftExit){
+        int l=0,h=arr.length-1,inx=-1;
+        while(l<=h){
+            int mid=(l+h)/2;
+            if(arr[mid]<target) l=mid+1;
+            else if(arr[mid]>target) h=mid-1;
+            else{
+                inx=mid;
+                if(leftExit) l=mid+1;
+                else h=mid-1;
             }
-            else if(arr[mid]>x) high=mid-1;
-            else low=mid+1;
         }
-        int i=mid-1,j=mid+1;
-        while(i>=0&&j<n&&arr[i]==x&&arr[j]==x){
-            count+=2;
-            i--;j++;
-        }
-        while(i>=0&&arr[i]==x){
-            count++;i--;
-        }
-        while(j<n&&arr[j]==x){
-            count++;j++;
-        }
-        return count;
+        return inx;
     }
 }
